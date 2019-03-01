@@ -1,0 +1,12 @@
+#!/bin/bash
+
+PATH=$PATH:/opt/puppetlabs/bin
+
+while true; do
+    echo "slate.k8s.${CLUSTER:-none}.${NODENAME:-none}.total_mem $(facter memory.system.total_bytes)"
+    echo "slate.k8s.${CLUSTER:-none}.${NODENAME:-none}.avail_mem $(facter memory.system.available_bytes)"
+    echo "slate.k8s.${CLUSTER:-none}.${NODENAME:-none}.load_1m $(facter load_averages.1m)"
+    echo "slate.k8s.${CLUSTER:-none}.${NODENAME:-none}.load_5m $(facter load_averages.5m)"
+    echo "slate.k8s.${CLUSTER:-none}.${NODENAME:-none}.load_15m $(facter load_averages.15m)"
+    sleep 60
+done

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: slate-minimon
+spec:
+  selector:
+    matchLabels:
+      name: slate-minimon
+  template:
+    metadata:
+      labels:
+        name: slate-minimon
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+    containers:
+      - name: slate-minimon
+        image: slate-minimon:latest
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+          - name: NODENAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: CLUSTER
+            value: "LINCOLNTEST"
+      terminationGracePeriodSeconds: 30
